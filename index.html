@@ -1,18 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To Do List</title>
-    <script src="main.js" defer></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="header">To Do List</div>
-    <div class="main-content"></div>
-    <div class="footer">
-      <a href="https://github.com/Hassane24" target="blank">yes</a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To Do List</title>
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="header">
+    <img src="Images/check-circle-outline.svg" alt="" width="90px" height="90px">
+    To Do List
+  </div>
+  <div class="main-content">
+    <div class="sidebar">
+      <div class="default">
+        <img src="Images/calendar-check.svg" alt="">
+        Tasks
+      </div>
+      <h1>Projects</h1>
+      <div class="add-project-button">
+        <img src="Images/plus-circle.svg" alt="">
+        Add a Project
+      </div>
     </div>
-  </body>
+    <div class="todo-section">
+      <div class="wrapper-for-task-info">
+        <img src="Images/plus-circle.svg" alt="">
+        Add Task
+        <input type="text" id="task-info" required>
+        <button class="green">Add</button>
+        <button>Cancel</button>
+      </div>
+
+    </div>
+  </div>
+  <div class="footer">
+    Me Github
+    <a href="https://github.com/Hassane24" target="blank">
+      <img src="Images/github.svg" alt="" width="30px" height="30px"></a>
+  </div>
+</body>
+
 </html>
