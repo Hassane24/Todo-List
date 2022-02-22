@@ -10,6 +10,7 @@
 body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
   font-family: "Gothic A1", sans-serif;
 }
 
@@ -33,16 +34,18 @@ body {
   display: grid;
   grid-template-columns: 1fr 5fr;
   color: #18181b;
+  min-height: 72.7vh;
 }
 
 /* SideBar Styling */
 
 .sidebar {
   color: #18181b;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   background-color: #e5e5e5;
-  height: 80vh;
+  height: 100%;
   align-items: center;
   row-gap: 1.5rem;
 }
@@ -84,9 +87,8 @@ h1 {
   font-size: 1.5rem;
 }
 
-input {
-  flex: 1;
-  width: clamp(6vw, 70rem, 20vw);
+input[type="text"] {
+  width: clamp(6vw, 70rem, 50vw);
   padding: 0%;
   min-height: 1.5rem;
   border-radius: 8px;
@@ -101,7 +103,6 @@ input {
 input:focus {
   outline-width: 0;
   background-color: #e5e5e5;
-
 }
 
 button {
@@ -113,7 +114,7 @@ button {
   font-weight: 600;
 }
 
-button:hover {
+button.red:hover {
   cursor: pointer;
   background-color: red;
   transform: scale(107%);
@@ -125,6 +126,75 @@ button.green:hover {
   background-color: green;
   transform: scale(107%);
   transition: all 0.3s;
+}
+
+button.green:focus {
+  outline-color: green;
+}
+
+button.red:focus {
+  outline-color: red;
+}
+
+/* tasks section styling */
+
+.task-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  background-color: #e5e5e5;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  width: max(200px, 225px);
+}
+
+div.item > div:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.thin-line {
+  height: 1px;
+  background-color: #18181b;
+  width: 80%;
+  margin: 1.5rem 0;
+}
+
+input[type="date"] {
+  border: none;
+  background-color: #18181b;
+  color: #fafafa;
+}
+
+.delete-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  transition: transform 0.3s ease-in-out;
+  font-size: 1.25rem;
+}
+
+.delete-button:hover {
+  color: red;
+  transform: rotate(360deg);
+}
+
+.todo-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-title {
+  flex: 1;
 }
 
 /* footer styling */
