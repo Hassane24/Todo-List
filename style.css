@@ -78,62 +78,147 @@ h1 {
 /* input section styling */
 
 .wrapper-for-task-info {
-  padding: 1.5rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  column-gap: 1rem;
+  justify-content: center;
   margin-top: 1.5rem;
-  font-size: 1.5rem;
+  column-gap: 1rem;
 }
 
-input[type="text"] {
-  width: clamp(6vw, 70rem, 50vw);
-  padding: 0%;
-  min-height: 1.5rem;
-  border-radius: 8px;
-  border: none;
-  background-color: #e5e5e5;
-  font-family: "Gothic A1", sans-serif;
-  font-size: 1.5rem;
-  padding-left: 16px;
-  color: #18181b;
-}
-
-input:focus {
-  outline-width: 0;
-  background-color: #e5e5e5;
-}
-
-button {
-  font-family: "Gothic A1", sans-serif;
-  font-size: 1.5rem;
-  padding: 4px 26px;
-  border-radius: 1em;
-  border: none;
+.wrapper-for-task-info > span {
+  cursor: pointer;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
-button.red:hover {
-  cursor: pointer;
-  background-color: red;
-  transform: scale(107%);
-  transition: all 0.3s;
+.form {
+  display: flex;
+  flex-direction: column;
+  background-color: #e5e5e5;
+  margin: 1.5rem;
+  border-radius: 1rem;
+  padding: 1em;
+  row-gap: 2rem;
+  color: #18181b;
 }
 
-button.green:hover {
+.task-description {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 1rem;
+  color: #18181b;
+}
+
+label {
+  font-weight: 600;
+  color: #18181b;
+}
+
+input[type="text"],
+textarea {
+  flex: 1;
+}
+
+.cancel-button {
+  align-self: flex-end;
+}
+
+.task-title {
+  display: flex;
+  color: #18181b;
+  column-gap: 3.22rem;
+}
+
+.priority {
+  font-weight: 600;
+  display: flex;
+  column-gap: 1rem;
+  align-items: center;
+  color: #18181b;
+}
+
+.low,
+.medium,
+.high {
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-weight: 600;
+  background-color: white;
+  font-family: "Gothic A1", sans-serif;
+}
+
+.low {
+  border: 1px solid green;
+  color: green;
+}
+
+.low:hover {
   cursor: pointer;
   background-color: green;
-  transform: scale(107%);
-  transition: all 0.3s;
+  color: white;
+  transform: scale(106%);
+  transition: all 0.2s;
 }
 
-button.green:focus {
-  outline-color: green;
+.low.active {
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  transform: scale(106%);
+  transition: all 0.2s;
 }
 
-button.red:focus {
-  outline-color: red;
+.medium {
+  border: 1px solid #e9e92a;
+  color: #e9e92a;
+}
+
+.medium:hover {
+  cursor: pointer;
+  background-color: #e9e92a;
+  color: white;
+  transform: scale(106%);
+  transition: all 0.2s;
+}
+
+.medium.active {
+  cursor: pointer;
+  background-color: #e9e92a;
+  color: white;
+  transform: scale(106%);
+  transition: all 0.2s;
+}
+
+.high {
+  color: red;
+  border: 1px solid red;
+}
+
+.high:hover {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  transform: scale(106%);
+  transition: all 0.2s;
+}
+
+.high.active {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  transform: scale(106%);
+  transition: all 0.2s;
+}
+
+.due-date {
+  font-weight: 600;
+  color: #18181b;
+}
+
+#due-date.due {
+  margin-right: auto;
+  background-color: white;
+  color: #18181b;
 }
 
 /* tasks section styling */
@@ -155,6 +240,18 @@ button.red:focus {
   width: max(200px, 225px);
 }
 
+.item.low-prio {
+  border: 2px solid green;
+}
+
+.item.mid-prio {
+  border: 2px solid yellow;
+}
+
+.item.high-prio {
+  border: 2px solid red;
+}
+
 div.item > div:first-child {
   display: flex;
   justify-content: center;
@@ -174,7 +271,8 @@ input[type="date"] {
   color: #fafafa;
 }
 
-.delete-button {
+.delete-button,
+.cancel-button {
   cursor: pointer;
   border: none;
   outline: none;
@@ -183,7 +281,8 @@ input[type="date"] {
   font-size: 1.25rem;
 }
 
-.delete-button:hover {
+.delete-button:hover,
+.cancel-button:hover {
   color: red;
   transform: rotate(360deg);
 }
@@ -194,6 +293,7 @@ input[type="date"] {
 }
 
 .task-title {
+  font-weight: 600;
   flex: 1;
 }
 

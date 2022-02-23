@@ -34,11 +34,36 @@
       <div class="todo-section">
         <div class="wrapper-for-task-info">
           <img src="Images/plus-circle.svg" alt="" />
-          Add Task
-          <input type="text" id="task-info" required />
-          <button class="green">Add</button>
-          <button class="red">Cancel</button>
+          <span>Add a task</span>
         </div>
+        <div class="form">
+          <button class="cancel-button">&times;</button>
+          <div class="task-title">
+            <label for="task-title">Task Title</label>
+            <input type="text" name="task-title" id="task-title" required />
+          </div>
+          <div class="task-description">
+            <label for="task-description">About the task</label>
+            <textarea
+              name="task-description"
+              id="task-description"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div class="priority">
+            Priority:
+            <button class="low">LOW</button>
+            <button class="medium">MEDIUM</button>
+            <button class="high">HIGH</button>
+          </div>
+          <div class="due-date">
+            Due Date :
+            <input type="date" class="due" id="due-date" />
+            <button class="submit">Add task</button>
+          </div>
+        </div>
+        <div id="overlay"></div>
         <div class="task-items">
           <div class="item">
             <div>
