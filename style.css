@@ -34,7 +34,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 5fr;
   color: #18181b;
-  min-height: 72.7vh;
+  min-height: 80vh;
 }
 
 /* SideBar Styling */
@@ -85,7 +85,7 @@ h1 {
   column-gap: 1rem;
 }
 
-.wrapper-for-task-info > span {
+.wrapper-for-task-info>span {
   cursor: pointer;
   font-size: 1.3rem;
   font-weight: 600;
@@ -100,6 +100,35 @@ h1 {
   padding: 1em;
   row-gap: 2rem;
   color: #18181b;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  width: 400px;
+  min-width: 60%;
+  z-index: 15;
+}
+
+.form.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .task-description {
@@ -117,6 +146,10 @@ label {
 input[type="text"],
 textarea {
   flex: 1;
+  padding-left: 5px;
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .cancel-button {
@@ -145,6 +178,7 @@ textarea {
   font-weight: 600;
   background-color: white;
   font-family: "Gothic A1", sans-serif;
+  margin-left: 3rem;
 }
 
 .low {
@@ -171,6 +205,7 @@ textarea {
 .medium {
   border: 1px solid #e9e92a;
   color: #e9e92a;
+  margin-left: 0;
 }
 
 .medium:hover {
@@ -192,6 +227,7 @@ textarea {
 .high {
   color: red;
   border: 1px solid red;
+  margin-left: 0;
 }
 
 .high:hover {
@@ -211,14 +247,38 @@ textarea {
 }
 
 .due-date {
+  display: flex;
   font-weight: 600;
   color: #18181b;
+  align-items: center;
 }
 
 #due-date.due {
   margin-right: auto;
   background-color: white;
   color: #18181b;
+  margin-left: 2.8rem;
+  border: 2px solid #18181b;
+  border-radius: 5px;
+}
+
+.submit {
+  border: none;
+  background-color: #0891b2;
+  padding: 8px 16px;
+  border-radius: 1rem;
+  font-weight: 600;
+  color: white;
+  font-family: "Gothic A1", sans-serif;
+  font-size: 1.1rem;
+}
+
+.submit:hover {
+  cursor: pointer;
+  transform: scale(106%);
+  transition: all 0.3s;
+  background-color: #22d3ee;
+  font-size: 1.2rem;
 }
 
 /* tasks section styling */
@@ -252,7 +312,7 @@ textarea {
   border: 2px solid red;
 }
 
-div.item > div:first-child {
+div.item>div:first-child {
   display: flex;
   justify-content: center;
   align-items: center;
