@@ -8,8 +8,27 @@ const highPrio = document.querySelector(".high");
 const prioError = document.querySelector("span.error");
 const taskTitle = document.querySelector("[data-title]");
 const taskAbout = document.querySelector("[data-about]");
+const addProjectButton = document.querySelector(".add-project-button");
+const addProject = document.querySelector("#add-project");
+const cancelProject = document.querySelector("#cancel-project");
+const projectForm = document.querySelector(".projects");
 
 const popUpForm = (() => {
+  addProjectButton.addEventListener("click", () => {
+    addClass(addProjectButton, "hide");
+    removeClass(projectForm, "hide");
+  });
+
+  cancelProject.addEventListener("click", () => {
+    addClass(projectForm, "hide");
+    removeClass(addProjectButton, "hide");
+  });
+
+  addProject.addEventListener("click", () => {
+    addClass(projectForm, "hide");
+    removeClass(addProjectButton, "hide");
+  });
+
   lowPrio.addEventListener("click", () => {
     addClass(lowPrio, "active");
     removeClass(mediumPrio, "active");

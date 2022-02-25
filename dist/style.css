@@ -47,7 +47,7 @@ body {
   background-color: #e5e5e5;
   height: 100%;
   align-items: center;
-  row-gap: 1.5rem;
+  row-gap: 1rem;
 }
 
 .default {
@@ -73,6 +73,61 @@ h1 {
   column-gap: 1.5rem;
 }
 
+.add-project-button:hover {
+  transform: scale(110%);
+  transition: 100ms ease-in-out;
+  text-decoration: underline;
+  text-decoration-color: #18181b;
+  cursor: pointer;
+}
+
+label[for="project"] {
+  margin-bottom: 0.2rem;
+  width: fit-content;
+  display: block;
+}
+
+form.projects {
+  align-self: center;
+  min-width: 40%;
+  width: 200px;
+}
+
+.hide {
+  opacity: 0;
+  position: absolute;
+}
+
+input#project {
+  max-width: 97%;
+}
+
+button#add-project,
+button#cancel-project {
+  border: none;
+  margin-top: 00.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  background-color: white;
+  font-size: 80%;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button#add-project:hover {
+  transform: scale(105%);
+  transition: 100ms ease-in-out;
+  background-color: green;
+  color: white;
+}
+
+button#cancel-project:hover {
+  transform: scale(105%);
+  transition: 100ms ease-in-out;
+  background-color: red;
+  color: white;
+}
+
 /* todo tasks section styling */
 
 /* input section styling */
@@ -86,9 +141,15 @@ h1 {
 }
 
 .wrapper-for-task-info > span {
-  cursor: pointer;
   font-size: 1.3rem;
   font-weight: 600;
+}
+
+.wrapper-for-task-info > span:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  transform: scale(110%);
+  transition: 100ms ease-in-out;
 }
 
 .form {
