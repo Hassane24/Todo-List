@@ -14,20 +14,30 @@ const cancelProject = document.querySelector("#cancel-project");
 const projectForm = document.querySelector(".projects");
 const projectTitleInput = document.getElementById("project");
 const sideBar = document.querySelector(".sidebar");
+const titleError = document.querySelector(".title-error");
 
 addProjectButton.addEventListener("click", () => {
+  UI.clearFormInputs(projectTitleInput, "");
   UI.addClass(addProjectButton, "hide");
   UI.removeClass(projectForm, "hide");
+  UI.removeClass(addProject, "active");
+  UI.removeClass(cancelProject, "active");
+  UI.removeClass(titleError, "active");
 });
 
 cancelProject.addEventListener("click", () => {
   UI.addClass(projectForm, "hide");
   UI.removeClass(addProjectButton, "hide");
-  UI.clearFormInputs(projectTitleInput, "");
 });
 
 addProject.addEventListener("click", () => {
-  if (projectTitleInput.value == "") return;
+  if (projectTitleInput.value == "") {
+    UI.addClass(titleError, "active");
+    UI.showError(titleError, "Please choose a project title");
+    UI.addClass(addProject, "active");
+    UI.addClass(cancelProject, "active");
+    return;
+  }
   UI.addClass(projectForm, "hide");
   UI.removeClass(addProjectButton, "hide");
   createProjects();
@@ -93,11 +103,13 @@ submitButton.addEventListener("click", (e) => {
 
 function createProjects() {
   const image = document.createElement("img");
+  image.src = "Images/format-list-checks.svg";
+  const span = document.createElement("span");
+  UI.addTextToElement(span, projectTitleInput.value);
   const div = document.createElement("div");
   UI.appendChildToParent(div, image);
-  image.src = "Images/format-list-checks.svg";
+  UI.appendChildToParent(div, span);
   UI.addClass(div, "a-project");
-  UI.addTextToElement(div, projectTitleInput.value);
   UI.appendChildToParent(sideBar, div);
   console.log(image);
 }

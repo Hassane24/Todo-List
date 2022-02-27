@@ -30,7 +30,7 @@
           <img src="Images/plus-circle.svg" alt="" />
           Add a Project
         </div>
-        <form class="projects hide">
+        <div class="projects hide">
           <label for="project">Project Name</label>
           <input
             type="text"
@@ -39,9 +39,10 @@
             required
             autocomplete="off"
           />
+          <span class="title-error">please choose a task title</span>
           <button type="button" id="add-project">Add Project</button>
           <button type="button" id="cancel-project">Cancel Project</button>
-        </form>
+        </div>
         <div class="a-project">
           <img src="Images/format-list-checks.svg" />
           Taking a hike with friends
@@ -62,6 +63,7 @@
               id="task-title"
               data-title
               required
+              autocomplete="off"
             />
           </div>
           <div class="task-description">
