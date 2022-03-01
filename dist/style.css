@@ -169,6 +169,17 @@ span.title-error.active {
   flex-grow: 1;
 }
 
+.a-project > span:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.a-project :nth-child(3):hover {
+  transform: scale(105%);
+  transition: all 200ms;
+  cursor: pointer;
+}
+
 /* todo tasks section styling */
 
 /* input section styling */
@@ -193,7 +204,7 @@ span.title-error.active {
   transition: 100ms ease-in-out;
 }
 
-.form {
+div.form {
   display: flex;
   flex-direction: column;
   background-color: #e5e5e5;

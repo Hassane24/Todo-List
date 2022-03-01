@@ -1,4 +1,26 @@
+import { task } from "./Task";
+
 const UI = (() => {
+  let taskArray = [];
+  const addTaskButton = document.getElementById("add-button");
+  const cancelButton = document.querySelector(".cancel-button");
+  const submitButton = document.querySelector(".submit");
+  const overlay = document.getElementById("overlay");
+  const lowPrio = document.querySelector(".low");
+  const mediumPrio = document.querySelector(".medium");
+  const highPrio = document.querySelector(".high");
+  const prioError = document.querySelector("span.error");
+  const taskTitle = document.querySelector("[data-title]");
+  const taskAbout = document.querySelector("[data-about]");
+  const date = document.querySelector("[date-date]");
+  const addProjectButton = document.querySelector(".add-project-button");
+  const addProject = document.querySelector("#add-project");
+  const cancelProject = document.querySelector("#cancel-project");
+  const projectForm = document.querySelector(".projects");
+  const projectTitleInput = document.getElementById("project");
+  const sideBar = document.querySelector(".sidebar");
+  const titleError = document.querySelector(".title-error");
+
   function loadHomePage() {
     addTask();
     closeTaskForm();
@@ -7,63 +29,46 @@ const UI = (() => {
   }
 
   function addTask() {
-    const lowPrio = document.querySelector(".low");
-    const mediumPrio = document.querySelector(".medium");
-    const highPrio = document.querySelector(".high");
-    const prioError = document.querySelector("span.error");
-    const taskTitle = document.querySelector("[data-title]");
-    const taskAbout = document.querySelector("[data-about]");
-    const addTaskButton = document.getElementById("add-button");
-    removeClass(lowPrio, "active");
-    removeClass(mediumPrio, "active");
-    removeClass(highPrio, "active");
-    removeClass(prioError, "active");
-    clearFormInputs(taskAbout, "");
-    clearFormInputs(taskTitle, "");
     addTaskButton.addEventListener("click", openForm);
   }
 
   function closeTaskForm() {
-    const overlay = document.getElementById("overlay");
-    const cancelButton = document.querySelector(".cancel-button");
-    const submitButton = document.querySelector(".submit");
-    const lowPrio = document.querySelector(".low");
-    const mediumPrio = document.querySelector(".medium");
-    const highPrio = document.querySelector(".high");
-    const prioError = document.querySelector("span.error");
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
-    submitButton.addEventListener("click", (e) => {
+    submitButton.addEventListener("click", () => {
       if (
         !lowPrio.classList.contains("active") &&
         !mediumPrio.classList.contains("active") &&
         !highPrio.classList.contains("active")
       ) {
-        e.preventDefault();
         addClass(prioError, "active");
         showError(prioError, "Please choose a priority");
       }
 
-      if (lowPrio.classList.contains(".active")) !e.preventDefault();
-      if (mediumPrio.classList.contains(".active")) !e.preventDefault();
-      if (highPrio.classList.contains(".active")) !e.preventDefault();
+      if (lowPrio.classList.contains("active")) {
+        taskArray.push(task(taskTitle.value, taskAbout.value, "", "low"));
+        closeForm();
+      }
+
+      if (mediumPrio.classList.contains("active")) {
+        taskArray.push(task(taskTitle.value, taskAbout.value, "", "low"));
+        closeForm();
+      }
+
+      if (highPrio.classList.contains("active")) {
+        taskArray.push(task(taskTitle.value, taskAbout.value, "", "low"));
+        closeForm();
+      }
     });
   }
 
   function prioButtons() {
-    const lowPrio = document.querySelector(".low");
-    const mediumPrio = document.querySelector(".medium");
-    const highPrio = document.querySelector(".high");
     lowPrio.addEventListener("click", prioButtonsActiveGreen);
     mediumPrio.addEventListener("click", prioButtonsActiveYellow);
     highPrio.addEventListener("click", prioButtonsActiveRed);
   }
 
   function prioButtonsActiveGreen() {
-    const lowPrio = document.querySelector(".low");
-    const mediumPrio = document.querySelector(".medium");
-    const highPrio = document.querySelector(".high");
-    const prioError = document.querySelector("span.error");
     addClass(lowPrio, "active");
     removeClass(mediumPrio, "active");
     removeClass(highPrio, "active");
@@ -71,10 +76,6 @@ const UI = (() => {
   }
 
   function prioButtonsActiveYellow() {
-    const lowPrio = document.querySelector(".low");
-    const mediumPrio = document.querySelector(".medium");
-    const highPrio = document.querySelector(".high");
-    const prioError = document.querySelector("span.error");
     addClass(mediumPrio, "active");
     removeClass(lowPrio, "active");
     removeClass(highPrio, "active");
@@ -82,10 +83,6 @@ const UI = (() => {
   }
 
   function prioButtonsActiveRed() {
-    const lowPrio = document.querySelector(".low");
-    const mediumPrio = document.querySelector(".medium");
-    const highPrio = document.querySelector(".high");
-    const prioError = document.querySelector("span.error");
     addClass(highPrio, "active");
     removeClass(mediumPrio, "active");
     removeClass(lowPrio, "active");
@@ -93,35 +90,31 @@ const UI = (() => {
   }
 
   function openForm() {
-    const form = document.querySelector("form.form");
-    const overlay = document.getElementById("overlay");
+    removeClass(lowPrio, "active");
+    removeClass(mediumPrio, "active");
+    removeClass(highPrio, "active");
+    removeClass(prioError, "active");
+    clearFormInputs(taskAbout, "");
+    clearFormInputs(taskTitle, "");
+    const form = document.querySelector("div.form");
     addClass(form, "active");
     addClass(overlay, "active");
+    console.log(taskArray);
   }
 
   function closeForm() {
-    const form = document.querySelector("form.form");
-    const overlay = document.getElementById("overlay");
+    const form = document.querySelector("div.form");
     removeClass(form, "active");
     removeClass(overlay, "active");
   }
 
   function addProjectForm() {
-    const addProjectButton = document.querySelector(".add-project-button");
-    const addProject = document.querySelector("#add-project");
-    const cancelProject = document.querySelector("#cancel-project");
     addProjectButton.addEventListener("click", openProjectForm);
     cancelProject.addEventListener("click", closeProjectForm);
     addProject.addEventListener("click", addProjectTitle);
   }
 
   function addProjectTitle() {
-    const addProjectButton = document.querySelector(".add-project-button");
-    const addProject = document.querySelector("#add-project");
-    const cancelProject = document.querySelector("#cancel-project");
-    const projectForm = document.querySelector(".projects");
-    const projectTitleInput = document.getElementById("project");
-    const titleError = document.querySelector(".title-error");
     if (projectTitleInput.value == "") {
       addClass(titleError, "active");
       showError(titleError, "Please choose a project title");
@@ -135,33 +128,26 @@ const UI = (() => {
   }
 
   function createProjects() {
-    const projectTitleInput = document.getElementById("project");
-    const sideBar = document.querySelector(".sidebar");
     const image = document.createElement("img");
+    const closeImage = document.createElement("img");
+    closeImage.src = "Images/close-circle-outline.svg";
     image.src = "Images/format-list-checks.svg";
     const span = document.createElement("span");
-    UI.addTextToElement(span, projectTitleInput.value);
+    addTextToElement(span, projectTitleInput.value);
     const div = document.createElement("div");
-    UI.appendChildToParent(div, image);
-    UI.appendChildToParent(div, span);
-    UI.addClass(div, "a-project");
-    UI.appendChildToParent(sideBar, div);
+    appendChildToParent(div, image);
+    appendChildToParent(div, span);
+    appendChildToParent(div, closeImage);
+    addClass(div, "a-project");
+    appendChildToParent(sideBar, div);
   }
 
   function closeProjectForm() {
-    const addProjectButton = document.querySelector(".add-project-button");
-    const projectForm = document.querySelector(".projects");
     addClass(projectForm, "hide");
     removeClass(addProjectButton, "hide");
   }
 
   function openProjectForm() {
-    const addProjectButton = document.querySelector(".add-project-button");
-    const addProject = document.querySelector("#add-project");
-    const cancelProject = document.querySelector("#cancel-project");
-    const projectForm = document.querySelector(".projects");
-    const projectTitleInput = document.getElementById("project");
-    const titleError = document.querySelector(".title-error");
     clearFormInputs(projectTitleInput, "");
     addClass(addProjectButton, "hide");
     removeClass(projectForm, "hide");
@@ -196,6 +182,7 @@ const UI = (() => {
 
   return {
     loadHomePage,
+    taskArray,
   };
 })();
 

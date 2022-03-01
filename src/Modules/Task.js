@@ -3,6 +3,10 @@ function task(title, description, dueDate, priority, isDone = false) {
     return title;
   };
 
+  const getDate = () => {
+    return dueDate;
+  };
+
   const getDescription = () => {
     return description;
   };
@@ -13,7 +17,7 @@ function task(title, description, dueDate, priority, isDone = false) {
 
   const toggle = () => {
     isDone = !isDone;
-  },
+  };
 
   return {
     title,
@@ -25,5 +29,8 @@ function task(title, description, dueDate, priority, isDone = false) {
     getDescription,
     getPriority,
     toggle,
+    getDate,
   };
 }
+
+export { task };
