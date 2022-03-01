@@ -12,7 +12,7 @@ const UI = (() => {
   const prioError = document.querySelector("span.error");
   const taskTitle = document.querySelector("[data-title]");
   const taskAbout = document.querySelector("[data-about]");
-  const date = document.querySelector("[date-date]");
+  const date = document.getElementById("due-date");
   const addProjectButton = document.querySelector(".add-project-button");
   const addProject = document.querySelector("#add-project");
   const cancelProject = document.querySelector("#cancel-project");
@@ -36,6 +36,13 @@ const UI = (() => {
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
     submitButton.addEventListener("click", () => {
+      // Input Error
+
+      if (taskTitle.value == "" || date.value == "")
+        return alert("Task Title is empty or you havent chose the due date");
+
+      //     Priority Error
+
       if (
         !lowPrio.classList.contains("active") &&
         !mediumPrio.classList.contains("active") &&
@@ -43,20 +50,27 @@ const UI = (() => {
       ) {
         addClass(prioError, "active");
         showError(prioError, "Please choose a priority");
+        return;
       }
 
       if (lowPrio.classList.contains("active")) {
-        taskArray.push(task(taskTitle.value, taskAbout.value, "", "low"));
+        taskArray.push(
+          task(taskTitle.value, taskAbout.value, date.value, "low")
+        );
         closeForm();
       }
 
       if (mediumPrio.classList.contains("active")) {
-        taskArray.push(task(taskTitle.value, taskAbout.value, "", "low"));
+        taskArray.push(
+          task(taskTitle.value, taskAbout.value, date.value, "low")
+        );
         closeForm();
       }
 
       if (highPrio.classList.contains("active")) {
-        taskArray.push(task(taskTitle.value, taskAbout.value, "", "low"));
+        taskArray.push(
+          task(taskTitle.value, taskAbout.value, date.value, "low")
+        );
         closeForm();
       }
     });
@@ -99,7 +113,6 @@ const UI = (() => {
     const form = document.querySelector("div.form");
     addClass(form, "active");
     addClass(overlay, "active");
-    console.log(taskArray);
   }
 
   function closeForm() {
@@ -156,6 +169,8 @@ const UI = (() => {
     removeClass(titleError, "active");
   }
 
+  // Utility functions
+
   function addClass(element, clas) {
     element.classList.add(clas);
   }
@@ -182,7 +197,6 @@ const UI = (() => {
 
   return {
     loadHomePage,
-    taskArray,
   };
 })();
 
