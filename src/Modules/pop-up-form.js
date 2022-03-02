@@ -57,7 +57,6 @@ const UI = (() => {
         taskArray.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
-        displayTasks(taskArray);
         closeForm();
       }
 
@@ -65,7 +64,6 @@ const UI = (() => {
         taskArray.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
-        displayTasks(taskArray);
         closeForm();
       }
 
@@ -73,7 +71,6 @@ const UI = (() => {
         taskArray.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
-        displayTasks(taskArray);
         closeForm();
       }
       displayTasks(taskArray);
@@ -93,7 +90,7 @@ const UI = (() => {
       checkBox.setAttribute("type", "checkbox");
       checkBox.setAttribute("id", "checkbox");
       const taskTitleDiv = document.createElement("div");
-      addClass(taskTitleDiv, "task-title");
+      addClass(taskTitleDiv, "task-header");
       addTextToElement(taskTitleDiv, array[i].title);
       const deleteButton = document.createElement("button");
       addClass(deleteButton, "delete-button");

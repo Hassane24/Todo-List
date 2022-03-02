@@ -431,6 +431,10 @@ span.error.active {
   width: max(200px, 225px);
 }
 
+.task-info {
+  flex: 1;
+}
+
 .item.low-prio {
   border: 2px solid green;
 }
@@ -447,6 +451,12 @@ div.item > div:first-child {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.task-header {
+  margin: 0 auto;
+  font-weight: 600;
 }
 
 .thin-line {
@@ -460,6 +470,10 @@ input[type="date"] {
   border: none;
   background-color: #18181b;
   color: #fafafa;
+}
+
+.task-info {
+  margin: auto 0;
 }
 
 .delete-button,
