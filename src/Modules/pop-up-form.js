@@ -36,7 +36,7 @@ const UI = (() => {
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
     submitButton.addEventListener("click", () => {
-      // Input Error
+      //     Input Error
 
       if (taskTitle.value == "" || date.value == "")
         return alert("Task Title is empty or you havent chose the due date");
@@ -57,6 +57,7 @@ const UI = (() => {
         taskArray.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
+        displayTasks(taskArray);
         closeForm();
       }
 
@@ -64,6 +65,7 @@ const UI = (() => {
         taskArray.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
+        displayTasks(taskArray);
         closeForm();
       }
 
@@ -71,9 +73,54 @@ const UI = (() => {
         taskArray.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
+        displayTasks(taskArray);
         closeForm();
       }
+      displayTasks(taskArray);
     });
+  }
+
+  function displayTasks(array) {
+    const taskItems = document.querySelector(".task-items");
+    console.log(taskItems);
+    for (let i = 0; i < array.length; i++) {
+      const itemDiv = document.createElement("div");
+      addClass(itemDiv, "item");
+      appendChildToParent(taskItems, itemDiv);
+      const div = document.createElement("div");
+      appendChildToParent(itemDiv, div);
+      const checkBox = document.createElement("input");
+      checkBox.setAttribute("type", "checkbox");
+      checkBox.setAttribute("id", "checkbox");
+      const taskTitleDiv = document.createElement("div");
+      addClass(taskTitleDiv, "task-title");
+      addTextToElement(taskTitleDiv, array[i].title);
+      const deleteButton = document.createElement("button");
+      addClass(deleteButton, "delete-button");
+      deleteButton.innerHTML = "&times;";
+      appendChildToParent(div, checkBox);
+      appendChildToParent(div, taskTitleDiv);
+      appendChildToParent(div, deleteButton);
+      const thinLine = document.createElement("div");
+      addClass(thinLine, "thin-line");
+      appendChildToParent(itemDiv, thinLine);
+      const taskInfoDiv = document.createElement("div");
+      addClass(taskInfoDiv, "task-info");
+      addTextToElement(taskInfoDiv, array[i].description);
+      appendChildToParent(itemDiv, taskInfoDiv);
+      const thinLine1 = document.createElement("div");
+      addClass(thinLine1, "thin-line");
+      appendChildToParent(itemDiv, thinLine1);
+      const taskStatusDiv = document.createElement("div");
+      addClass(taskStatusDiv, "task-status");
+      appendChildToParent(itemDiv, taskStatusDiv);
+      const datey = document.createElement("input");
+      datey.setAttribute("type", "date");
+      datey.setAttribute("name", "date");
+      datey.setAttribute("id", "date");
+      datey.value = array[i].dueDate;
+      appendChildToParent(taskStatusDiv, datey);
+    }
   }
 
   function prioButtons() {
