@@ -36,6 +36,9 @@ const UI = (() => {
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
     submitButton.addEventListener("click", () => {
+      //removing elements so they dont duplicate
+      removeElementsByClass("item");
+
       //     Input Error
 
       if (taskTitle.value == "" || date.value == "")
@@ -62,14 +65,14 @@ const UI = (() => {
 
       if (mediumPrio.classList.contains("active")) {
         taskArray.push(
-          task(taskTitle.value, taskAbout.value, date.value, "low")
+          task(taskTitle.value, taskAbout.value, date.value, "medium")
         );
         closeForm();
       }
 
       if (highPrio.classList.contains("active")) {
         taskArray.push(
-          task(taskTitle.value, taskAbout.value, date.value, "low")
+          task(taskTitle.value, taskAbout.value, date.value, "high")
         );
         closeForm();
       }
@@ -79,10 +82,15 @@ const UI = (() => {
 
   function displayTasks(array) {
     const taskItems = document.querySelector(".task-items");
-    console.log(taskItems);
+
     for (let i = 0; i < array.length; i++) {
+      array[i].id = "task" + i;
       const itemDiv = document.createElement("div");
       addClass(itemDiv, "item");
+      if (array[i].priority == "low") addClass(itemDiv, "low-prio");
+      if (array[i].priority == "medium") addClass(itemDiv, "mid-prio");
+      if (array[i].priority == "high") addClass(itemDiv, "high-prio");
+      console.log(taskArray);
       appendChildToParent(taskItems, itemDiv);
       const div = document.createElement("div");
       appendChildToParent(itemDiv, div);
@@ -117,6 +125,12 @@ const UI = (() => {
       datey.setAttribute("id", "date");
       datey.value = array[i].dueDate;
       appendChildToParent(taskStatusDiv, datey);
+      deleteButton.addEventListener("click", () => {
+        itemDiv.remove();
+        array = array.filter((itemDiv) => {
+          return itemDiv.id !== array[i].id;
+        });
+      });
     }
   }
 
@@ -154,6 +168,7 @@ const UI = (() => {
     removeClass(prioError, "active");
     clearFormInputs(taskAbout, "");
     clearFormInputs(taskTitle, "");
+    clearFormInputs(date, "");
     const form = document.querySelector("div.form");
     addClass(form, "active");
     addClass(overlay, "active");
@@ -237,6 +252,13 @@ const UI = (() => {
 
   function addTextToElement(element, text) {
     element.textContent = text;
+  }
+
+  function removeElementsByClass(className) {
+    const elements = document.getElementsByClassName(className);
+    while (elements.length > 0) {
+      elements[0].parentNode.removeChild(elements[0]);
+    }
   }
 
   return {
