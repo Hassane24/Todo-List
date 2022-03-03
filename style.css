@@ -415,8 +415,8 @@ span.error.active {
 /* tasks section styling */
 
 .task-items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
   padding: 1.5rem;
 }
@@ -429,6 +429,7 @@ span.error.active {
   padding: 1.5rem;
   border-radius: 1rem;
   width: max(200px, 225px);
+  height: 400px;
 }
 
 .task-info {
