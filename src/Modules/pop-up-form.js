@@ -26,6 +26,7 @@ const UI = (() => {
     closeTaskForm();
     addProjectForm();
     prioButtons();
+    storedTasks();
   }
 
   function addTask() {
@@ -90,7 +91,6 @@ const UI = (() => {
       if (array[i].priority == "low") addClass(itemDiv, "low-prio");
       if (array[i].priority == "medium") addClass(itemDiv, "mid-prio");
       if (array[i].priority == "high") addClass(itemDiv, "high-prio");
-      console.log(taskArray);
       appendChildToParent(taskItems, itemDiv);
       const div = document.createElement("div");
       appendChildToParent(itemDiv, div);
@@ -132,6 +132,18 @@ const UI = (() => {
         });
       });
     }
+  }
+
+  function storedTasks() {
+    window.addEventListener("beforeunload", () => {
+      if (myArray.length > taskArray.length) return;
+      localStorage.setItem("myArray", JSON.stringify(taskArray));
+    });
+
+    let myArray = localStorage.getItem("myArray");
+    myArray = JSON.parse(myArray);
+    console.log(myArray);
+    displayTasks(myArray);
   }
 
   function prioButtons() {
