@@ -136,13 +136,12 @@ const UI = (() => {
 
   function storedTasks() {
     window.addEventListener("beforeunload", () => {
-      if (myArray.length > taskArray.length) return;
+      if (myArray.length >= taskArray.length) return;
       localStorage.setItem("myArray", JSON.stringify(taskArray));
     });
 
     let myArray = localStorage.getItem("myArray");
     myArray = JSON.parse(myArray);
-    console.log(myArray);
     displayTasks(myArray);
   }
 
