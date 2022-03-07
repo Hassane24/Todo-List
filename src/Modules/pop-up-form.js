@@ -2,6 +2,7 @@ import { task } from "./Task";
 
 const UI = (() => {
   let taskArray = [];
+  let myArray = [];
   const addTaskButton = document.getElementById("add-button");
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit");
@@ -37,6 +38,7 @@ const UI = (() => {
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
     submitButton.addEventListener("click", () => {
+      if (!taskArray.length) taskArray = taskArray.concat(myArray);
       //removing elements so they dont duplicate
       removeElementsByClass("item");
 
@@ -78,6 +80,8 @@ const UI = (() => {
         closeForm();
       }
       displayTasks(taskArray);
+      console.log(taskArray);
+      console.log(myArray);
     });
   }
 
@@ -140,9 +144,10 @@ const UI = (() => {
       localStorage.setItem("myArray", JSON.stringify(taskArray));
     });
 
-    let myArray = localStorage.getItem("myArray");
+    myArray = localStorage.getItem("myArray");
     myArray = JSON.parse(myArray);
     displayTasks(myArray);
+    return myArray;
   }
 
   function prioButtons() {
