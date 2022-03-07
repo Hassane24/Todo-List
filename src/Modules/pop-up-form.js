@@ -80,21 +80,20 @@ const UI = (() => {
         closeForm();
       }
       displayTasks(taskArray);
-      console.log(taskArray);
-      console.log(myArray);
+      console.table(taskArray);
+      console.table(myArray);
     });
   }
 
   function displayTasks(array) {
     const taskItems = document.querySelector(".task-items");
-
-    for (let i = 0; i < array.length; i++) {
-      array[i].id = "task" + i;
+    array.forEach((task, i) => {
+      task.id = `task${i}`;
       const itemDiv = document.createElement("div");
       addClass(itemDiv, "item");
-      if (array[i].priority == "low") addClass(itemDiv, "low-prio");
-      if (array[i].priority == "medium") addClass(itemDiv, "mid-prio");
-      if (array[i].priority == "high") addClass(itemDiv, "high-prio");
+      if (task.priority == "low") addClass(itemDiv, "low-prio");
+      if (task.priority == "medium") addClass(itemDiv, "mid-prio");
+      if (task.priority == "high") addClass(itemDiv, "high-prio");
       appendChildToParent(taskItems, itemDiv);
       const div = document.createElement("div");
       appendChildToParent(itemDiv, div);
@@ -103,7 +102,7 @@ const UI = (() => {
       checkBox.setAttribute("id", "checkbox");
       const taskTitleDiv = document.createElement("div");
       addClass(taskTitleDiv, "task-header");
-      addTextToElement(taskTitleDiv, array[i].title);
+      addTextToElement(taskTitleDiv, task.title);
       const deleteButton = document.createElement("button");
       addClass(deleteButton, "delete-button");
       deleteButton.innerHTML = "&times;";
@@ -115,7 +114,7 @@ const UI = (() => {
       appendChildToParent(itemDiv, thinLine);
       const taskInfoDiv = document.createElement("div");
       addClass(taskInfoDiv, "task-info");
-      addTextToElement(taskInfoDiv, array[i].description);
+      addTextToElement(taskInfoDiv, task.description);
       appendChildToParent(itemDiv, taskInfoDiv);
       const thinLine1 = document.createElement("div");
       addClass(thinLine1, "thin-line");
@@ -127,15 +126,20 @@ const UI = (() => {
       datey.setAttribute("type", "date");
       datey.setAttribute("name", "date");
       datey.setAttribute("id", "date");
-      datey.value = array[i].dueDate;
+      datey.value = task.dueDate;
       appendChildToParent(taskStatusDiv, datey);
       deleteButton.addEventListener("click", () => {
         itemDiv.remove();
-        array = array.filter((itemDiv) => {
-          return itemDiv.id !== array[i].id;
+        console.log(taskArray);
+        console.log(myArray);
+        taskArray = taskArray.filter((leTask) => {
+          return leTask.id !== task.id;
+        });
+        myArray = myArray.filter((leTask) => {
+          return leTask.id !== task.id;
         });
       });
-    }
+    });
   }
 
   function storedTasks() {
