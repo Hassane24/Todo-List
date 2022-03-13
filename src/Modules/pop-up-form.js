@@ -2,7 +2,8 @@ import { task } from "./Task";
 
 const UI = (() => {
   let taskArray = [];
-  let myArray = [];
+  let myArray = new Array();
+  taskArray.push(task("yes", "yes", "yes"));
   const addTaskButton = document.getElementById("add-button");
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit");
@@ -80,20 +81,21 @@ const UI = (() => {
         closeForm();
       }
       displayTasks(taskArray);
-      console.table(taskArray);
-      console.table(myArray);
+      console.log(taskArray);
+      console.log(myArray);
     });
   }
 
-  function displayTasks(array) {
+  function displayTasks(leArray) {
     const taskItems = document.querySelector(".task-items");
-    array.forEach((task, i) => {
-      task.id = `task${i}`;
+    if (leArray === null) return;
+    for (let i = 0; i < leArray.length; i++) {
+      leArray[i].id = "task" + i;
       const itemDiv = document.createElement("div");
       addClass(itemDiv, "item");
-      if (task.priority == "low") addClass(itemDiv, "low-prio");
-      if (task.priority == "medium") addClass(itemDiv, "mid-prio");
-      if (task.priority == "high") addClass(itemDiv, "high-prio");
+      if (leArray[i].priority == "low") addClass(itemDiv, "low-prio");
+      if (leArray[i].priority == "medium") addClass(itemDiv, "mid-prio");
+      if (leArray[i].priority == "high") addClass(itemDiv, "high-prio");
       appendChildToParent(taskItems, itemDiv);
       const div = document.createElement("div");
       appendChildToParent(itemDiv, div);
@@ -102,7 +104,7 @@ const UI = (() => {
       checkBox.setAttribute("id", "checkbox");
       const taskTitleDiv = document.createElement("div");
       addClass(taskTitleDiv, "task-header");
-      addTextToElement(taskTitleDiv, task.title);
+      addTextToElement(taskTitleDiv, leArray[i].title);
       const deleteButton = document.createElement("button");
       addClass(deleteButton, "delete-button");
       deleteButton.innerHTML = "&times;";
@@ -114,7 +116,7 @@ const UI = (() => {
       appendChildToParent(itemDiv, thinLine);
       const taskInfoDiv = document.createElement("div");
       addClass(taskInfoDiv, "task-info");
-      addTextToElement(taskInfoDiv, task.description);
+      addTextToElement(taskInfoDiv, leArray[i].description);
       appendChildToParent(itemDiv, taskInfoDiv);
       const thinLine1 = document.createElement("div");
       addClass(thinLine1, "thin-line");
@@ -126,32 +128,26 @@ const UI = (() => {
       datey.setAttribute("type", "date");
       datey.setAttribute("name", "date");
       datey.setAttribute("id", "date");
-      datey.value = task.dueDate;
+      datey.value = leArray[i].dueDate;
       appendChildToParent(taskStatusDiv, datey);
       deleteButton.addEventListener("click", () => {
         itemDiv.remove();
-        console.log(taskArray);
-        console.log(myArray);
-        taskArray = taskArray.filter((leTask) => {
-          return leTask.id !== task.id;
-        });
-        myArray = myArray.filter((leTask) => {
-          return leTask.id !== task.id;
+        leArray = leArray.filter((itemDiv) => {
+          return itemDiv.id !== leArray[i].id;
         });
       });
-    });
+    }
   }
 
   function storedTasks() {
     window.addEventListener("beforeunload", () => {
-      if (myArray.length >= taskArray.length) return;
+      if (myArray.length > taskArray.length) return;
       localStorage.setItem("myArray", JSON.stringify(taskArray));
     });
 
     myArray = localStorage.getItem("myArray");
     myArray = JSON.parse(myArray);
     displayTasks(myArray);
-    return myArray;
   }
 
   function prioButtons() {
