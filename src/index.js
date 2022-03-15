@@ -1,2 +1,2 @@
 import { UI } from "./Modules/pop-up-form";
-UI.loadHomePage();
+document.addEventListener("DOMContentLoaded", UI.loadHomePage);

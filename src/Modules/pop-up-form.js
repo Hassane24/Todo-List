@@ -2,7 +2,7 @@ import { task } from "./Task";
 
 const UI = (() => {
   let taskArray = new Array();
-  let myArray = [task("Home Work", "2022-03-08", "low")];
+  let myArray = new Array();
   const addTaskButton = document.getElementById("add-button");
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit");
@@ -27,8 +27,10 @@ const UI = (() => {
     closeTaskForm();
     addProjectForm();
     prioButtons();
+    console.log(taskArray);
     console.log(storedTasks());
     displayTasks(taskArray);
+    storedTasks();
   }
 
   function addTask() {
@@ -145,9 +147,9 @@ const UI = (() => {
     window.addEventListener("beforeunload", () => {
       localStorage.setItem("myArray", JSON.stringify(taskArray));
     });
-
-    myArray = localStorage.getItem("myArray");
-    myArray = JSON.parse(myArray);
+    let tempArray = localStorage.getItem("myArray");
+    tempArray = JSON.parse(tempArray);
+    myArray = myArray.concat(tempArray);
     return myArray;
   }
 
