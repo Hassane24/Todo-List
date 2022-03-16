@@ -1,104 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To Do List</title>
-    <script src="main.js" defer></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <div class="header">
-      <img
-        src="Images/check-circle-outline.svg"
-        alt=""
-        width="90px"
-        height="90px"
-      />
-      To Do List
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To Do List</title>
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="header">
+    <img src="Images/check-circle-outline.svg" alt="" width="90px" height="90px" />
+    To Do List
+  </div>
+  <div class="main-content">
+    <div class="sidebar">
+      <div class="default">
+        <img src="Images/calendar-check.svg" alt="" />
+        Tasks
+      </div>
+      <h1>Projects</h1>
+      <div class="add-project-button">
+        <img src="Images/plus-circle.svg" alt="" />
+        Add a Project
+      </div>
+      <div class="projects hide">
+        <label for="project">Project Name</label>
+        <input type="text" name="project" id="project" required autocomplete="off" />
+        <span class="title-error">please choose a task title</span>
+        <button type="button" id="add-project">Add Project</button>
+        <button type="button" id="cancel-project">Cancel Project</button>
+      </div>
+
     </div>
-    <div class="main-content">
-      <div class="sidebar">
-        <div class="default">
-          <img src="Images/calendar-check.svg" alt="" />
-          Tasks
+    <div class="todo-section">
+      <div class="wrapper-for-task-info">
+        <img src="Images/plus-circle.svg" alt="" />
+        <span id="add-button">Add a task</span>
+      </div>
+      <div class="form">
+        <button class="cancel-button" type="button">&times;</button>
+        <div class="task-title">
+          <label for="task-title">Task Title</label>
+          <input type="text" name="task-title" id="task-title" data-title required autocomplete="off" />
         </div>
-        <h1>Projects</h1>
-        <div class="add-project-button">
-          <img src="Images/plus-circle.svg" alt="" />
-          Add a Project
+        <div class="task-description">
+          <label for="task-description">About the task</label>
+          <textarea name="task-description" id="task-description" cols="30" rows="10" data-about></textarea>
         </div>
-        <div class="projects hide">
-          <label for="project">Project Name</label>
-          <input
-            type="text"
-            name="project"
-            id="project"
-            required
-            autocomplete="off"
-          />
-          <span class="title-error">please choose a task title</span>
-          <button type="button" id="add-project">Add Project</button>
-          <button type="button" id="cancel-project">Cancel Project</button>
+        <div class="priority">
+          Priority:
+          <button class="low" data-prio>LOW</button>
+          <button class="medium" data-prio>MEDIUM</button>
+          <button class="high" data-prio>HIGH</button>
+          <span class="error"></span>
         </div>
-        <div class="a-project">
-          <img src="Images/format-list-checks.svg" />
-          <span>Taking a hike with friends</span>
-          <img src="Images/close-circle-outline.svg" />
+        <div class="due-date">
+          Due Date :
+          <input type="date" class="due" id="due-date" data-date required />
+          <button class="submit">Add task</button>
         </div>
       </div>
-      <div class="todo-section">
-        <div class="wrapper-for-task-info">
-          <img src="Images/plus-circle.svg" alt="" />
-          <span id="add-button">Add a task</span>
-        </div>
-        <div class="form">
-          <button class="cancel-button" type="button">&times;</button>
-          <div class="task-title">
-            <label for="task-title">Task Title</label>
-            <input
-              type="text"
-              name="task-title"
-              id="task-title"
-              data-title
-              required
-              autocomplete="off"
-            />
-          </div>
-          <div class="task-description">
-            <label for="task-description">About the task</label>
-            <textarea
-              name="task-description"
-              id="task-description"
-              cols="30"
-              rows="10"
-              data-about
-            ></textarea>
-          </div>
-          <div class="priority">
-            Priority:
-            <button class="low" data-prio>LOW</button>
-            <button class="medium" data-prio>MEDIUM</button>
-            <button class="high" data-prio>HIGH</button>
-            <span class="error"></span>
-          </div>
-          <div class="due-date">
-            Due Date :
-            <input type="date" class="due" id="due-date" data-date required />
-            <button class="submit">Add task</button>
-          </div>
-        </div>
-        <div id="overlay"></div>
-        <div class="task-items"></div>
-      </div>
+      <div id="overlay"></div>
+      <div class="task-items"></div>
     </div>
-    <div class="footer">
-      Me Github
-      <a href="https://github.com/Hassane24" target="blank">
-        <img src="Images/github.svg" alt="" width="30px" height="30px"
-      /></a>
-    </div>
-  </body>
+  </div>
+  <div class="footer">
+    Me Github
+    <a href="https://github.com/Hassane24" target="blank">
+      <img src="Images/github.svg" alt="" width="30px" height="30px" /></a>
+  </div>
+</body>
+
 </html>

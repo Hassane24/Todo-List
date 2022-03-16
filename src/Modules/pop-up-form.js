@@ -27,10 +27,9 @@ const UI = (() => {
     closeTaskForm();
     addProjectForm();
     prioButtons();
-    console.log(taskArray);
-    console.log(storedTasks());
+    getTasks();
     displayTasks(taskArray);
-    storedTasks();
+    console.log(taskArray);
   }
 
   function addTask() {
@@ -68,7 +67,8 @@ const UI = (() => {
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
         closeForm();
-        return displayTasks(taskArray);
+        displayTasks(taskArray);
+        return storeTasks(taskArray);
       }
 
       if (mediumPrio.classList.contains("active")) {
@@ -76,7 +76,8 @@ const UI = (() => {
           task(taskTitle.value, taskAbout.value, date.value, "medium")
         );
         closeForm();
-        return displayTasks(taskArray);
+        displayTasks(taskArray);
+        return storeTasks(taskArray);
       }
 
       if (highPrio.classList.contains("active")) {
@@ -84,7 +85,8 @@ const UI = (() => {
           task(taskTitle.value, taskAbout.value, date.value, "high")
         );
         closeForm();
-        return displayTasks(taskArray);
+        displayTasks(taskArray);
+        return storeTasks(taskArray);
       }
     });
   }
@@ -139,18 +141,20 @@ const UI = (() => {
         taskArray = taskArray.filter((todo) => {
           if (todo.id !== taskArray[i].id) return true;
         });
+        storeTasks(taskArray);
       });
     }
   }
 
-  function storedTasks() {
-    window.addEventListener("beforeunload", () => {
-      localStorage.setItem("myArray", JSON.stringify(taskArray));
-    });
-    let tempArray = localStorage.getItem("myArray");
-    tempArray = JSON.parse(tempArray);
-    myArray = myArray.concat(tempArray);
-    return myArray;
+  function storeTasks(array) {
+    localStorage.setItem("myArray", JSON.stringify(array));
+  }
+
+  function getTasks() {
+    if (!localStorage.getItem("myArray")) return;
+    myArray = localStorage.getItem("myArray");
+    myArray = JSON.parse(myArray);
+    taskArray = [...taskArray, ...myArray];
   }
 
   function prioButtons() {
