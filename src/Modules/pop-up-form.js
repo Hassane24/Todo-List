@@ -29,7 +29,6 @@ const UI = (() => {
     prioButtons();
     getTasks();
     displayTasks(taskArray);
-    console.log(taskArray);
   }
 
   function addTask() {
@@ -40,9 +39,6 @@ const UI = (() => {
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
     submitButton.addEventListener("click", () => {
-      console.log(taskArray);
-      console.log(myArray);
-      // if (!taskArray.length) taskArray = taskArray.concat(myArray);
       //removing elements so they dont duplicate
       removeElementsByClass("item");
 
@@ -136,8 +132,6 @@ const UI = (() => {
       appendChildToParent(taskStatusDiv, datey);
       deleteButton.addEventListener("click", () => {
         itemDiv.remove();
-        console.log(taskArray);
-        console.log(myArray);
         taskArray = taskArray.filter((todo) => {
           if (todo.id !== taskArray[i].id) return true;
         });
