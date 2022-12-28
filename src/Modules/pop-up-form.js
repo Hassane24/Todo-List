@@ -1,8 +1,9 @@
 import { task } from "./Task";
 
 const UI = (() => {
-  let taskArray = new Array();
-  let myArray = new Array();
+  let taskArray = [];
+  let myArray = [];
+  // Caching The DOM
   const addTaskButton = document.getElementById("add-button");
   const cancelButton = document.querySelector(".cancel-button");
   const submitButton = document.querySelector(".submit");
@@ -132,9 +133,9 @@ const UI = (() => {
       appendChildToParent(taskStatusDiv, datey);
       deleteButton.addEventListener("click", () => {
         itemDiv.remove();
-        taskArray = taskArray.filter((todo) => {
-          if (todo.id !== taskArray[i].id) return true;
-        });
+        taskArray = taskArray.filter((todo) =>
+          todo.id !== array[i].id ? true : false
+        );
         storeTasks(taskArray);
       });
     }
@@ -159,42 +160,29 @@ const UI = (() => {
 
   function prioButtonsActiveGreen() {
     addClass(lowPrio, "active");
-    removeClass(mediumPrio, "active");
-    removeClass(highPrio, "active");
-    removeClass(prioError, "active");
+    removeClass([mediumPrio, highPrio, prioError], "active");
   }
 
   function prioButtonsActiveYellow() {
     addClass(mediumPrio, "active");
-    removeClass(lowPrio, "active");
-    removeClass(highPrio, "active");
-    removeClass(prioError, "active");
+    removeClass([lowPrio, highPrio, prioError], "active");
   }
 
   function prioButtonsActiveRed() {
     addClass(highPrio, "active");
-    removeClass(mediumPrio, "active");
-    removeClass(lowPrio, "active");
-    removeClass(prioError, "active");
+    removeClass([mediumPrio, lowPrio, prioError], "active");
   }
 
   function openForm() {
-    removeClass(lowPrio, "active");
-    removeClass(mediumPrio, "active");
-    removeClass(highPrio, "active");
-    removeClass(prioError, "active");
-    clearFormInputs(taskAbout, "");
-    clearFormInputs(taskTitle, "");
-    clearFormInputs(date, "");
+    removeClass([lowPrio, mediumPrio, highPrio, prioError], "active");
+    clearFormInputs([taskAbout, taskTitle, date], "");
     const form = document.querySelector("div.form");
-    addClass(form, "active");
-    addClass(overlay, "active");
+    addClass([form, overlay], "active");
   }
 
   function closeForm() {
     const form = document.querySelector("div.form");
-    removeClass(form, "active");
-    removeClass(overlay, "active");
+    removeClass([form, overlay], "active");
   }
 
   function addProjectForm() {
@@ -205,10 +193,8 @@ const UI = (() => {
 
   function addProjectTitle() {
     if (projectTitleInput.value == "") {
-      addClass(titleError, "active");
+      addClass([titleError, cancelProject, addProject], "active");
       showError(titleError, "Please choose a project title");
-      addClass(addProject, "active");
-      addClass(cancelProject, "active");
       return;
     }
     addClass(projectForm, "hide");
@@ -234,33 +220,37 @@ const UI = (() => {
   function closeProjectForm() {
     addClass(projectForm, "hide");
     removeClass(addProjectButton, "hide");
+    removeClass(titleError, "active");
   }
 
   function openProjectForm() {
     clearFormInputs(projectTitleInput, "");
     addClass(addProjectButton, "hide");
-    removeClass(projectForm, "hide");
-    removeClass(addProject, "active");
-    removeClass(cancelProject, "active");
-    removeClass(titleError, "active");
+    removeClass([projectForm, addProject, cancelProject, titleError], "hide");
   }
 
   // Utility functions
 
-  function addClass(element, clas) {
-    element.classList.add(clas);
+  function addClass(elements, clas) {
+    if (Array.isArray(elements))
+      return elements.forEach((element) => element.classList.add(clas));
+    elements.classList.add(clas);
   }
 
-  function removeClass(element, clas) {
-    element.classList.remove(clas);
+  function removeClass(elements, clas) {
+    if (Array.isArray(elements))
+      return elements.forEach((element) => element.classList.remove(clas));
+    elements.classList.remove(clas);
   }
 
   function showError(element, message) {
     element.textContent = message;
   }
 
-  function clearFormInputs(element, clear) {
-    element.value = clear;
+  function clearFormInputs(elements, clear) {
+    if (Array.isArray(elements))
+      return elements.forEach((element) => (element.value = ""));
+    elements.value = "";
   }
 
   function appendChildToParent(parent, child) {
