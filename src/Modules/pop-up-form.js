@@ -231,41 +231,30 @@ const UI = (() => {
 
   // Utility functions
 
-  function addClass(elements, clas) {
-    if (Array.isArray(elements))
-      return elements.forEach((element) => element.classList.add(clas));
-    elements.classList.add(clas);
-  }
+  const addClass = (elements, className) =>
+    Array.isArray(elements)
+      ? elements.forEach((element) => element.classList.add(className))
+      : elements.classList.add(className);
 
-  function removeClass(elements, clas) {
-    if (Array.isArray(elements))
-      return elements.forEach((element) => element.classList.remove(clas));
-    elements.classList.remove(clas);
-  }
+  const removeClass = (elements, className) =>
+    Array.isArray(elements)
+      ? elements.forEach((element) => element.classList.remove(className))
+      : elements.classList.remove(className);
 
-  function showError(element, message) {
-    element.textContent = message;
-  }
+  const showError = (element, message) => (element.textContent = message);
 
-  function clearFormInputs(elements, clear) {
-    if (Array.isArray(elements))
-      return elements.forEach((element) => (element.value = ""));
-    elements.value = "";
-  }
+  const clearFormInputs = (elements) =>
+    Array.isArray(elements)
+      ? elements.forEach((element) => (element.value = ""))
+      : (elements.value = "");
 
-  function appendChildToParent(parent, child) {
-    parent.append(child);
-  }
+  const appendChildToParent = (parent, child) => parent.append(child);
 
-  function addTextToElement(element, text) {
-    element.textContent = text;
-  }
+  const addTextToElement = (element, text) => (element.textContent = text);
 
   function removeElementsByClass(className) {
     const elements = document.getElementsByClassName(className);
-    while (elements.length > 0) {
-      elements[0].parentNode.removeChild(elements[0]);
-    }
+    while (elements.length > 0) elements[0].parentNode.removeChild(elements[0]);
   }
 
   return {
