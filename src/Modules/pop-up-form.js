@@ -1,7 +1,7 @@
 import { task } from "./Task";
 
 const UI = (() => {
-  let taskArray = [];
+  let taskArray = [{ projectName: "default", tasks: [], isOn: true }];
   let myArray = [];
   // Caching The DOM
   const addTaskButton = document.getElementById("add-button");
@@ -29,7 +29,7 @@ const UI = (() => {
     addProjectForm();
     prioButtons();
     getTasks();
-    displayTasks(taskArray);
+    displayTasks(taskArray[0].tasks);
   }
 
   function addTask() {
@@ -60,29 +60,29 @@ const UI = (() => {
       }
 
       if (lowPrio.classList.contains("active")) {
-        taskArray.push(
+        taskArray[0].tasks.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
         closeForm();
-        displayTasks(taskArray);
+        displayTasks(taskArray[0].tasks);
         return storeTasks(taskArray);
       }
 
       if (mediumPrio.classList.contains("active")) {
-        taskArray.push(
+        taskArray[0].tasks.push(
           task(taskTitle.value, taskAbout.value, date.value, "medium")
         );
         closeForm();
-        displayTasks(taskArray);
+        displayTasks(taskArray[0].tasks);
         return storeTasks(taskArray);
       }
 
       if (highPrio.classList.contains("active")) {
-        taskArray.push(
+        taskArray[0].tasks.push(
           task(taskTitle.value, taskAbout.value, date.value, "high")
         );
         closeForm();
-        displayTasks(taskArray);
+        displayTasks(taskArray[0].tasks);
         return storeTasks(taskArray);
       }
     });
@@ -133,7 +133,7 @@ const UI = (() => {
       appendChildToParent(taskStatusDiv, datey);
       deleteButton.addEventListener("click", () => {
         itemDiv.remove();
-        taskArray = taskArray.filter((todo) =>
+        taskArray[0].tasks = taskArray[0].tasks.filter((todo) =>
           todo.id !== array[i].id ? true : false
         );
         storeTasks(taskArray);
@@ -149,7 +149,8 @@ const UI = (() => {
     if (!localStorage.getItem("myArray")) return;
     myArray = localStorage.getItem("myArray");
     myArray = JSON.parse(myArray);
-    taskArray = [...taskArray, ...myArray];
+    taskArray = [...taskArray];
+    taskArray[0].tasks = [...(myArray[0].tasks || [])];
   }
 
   function prioButtons() {
@@ -215,6 +216,23 @@ const UI = (() => {
     appendChildToParent(div, closeImage);
     addClass(div, "a-project");
     appendChildToParent(sideBar, div);
+    span.addEventListener("click", () => {
+      if (
+        !taskArray.some((project) => project.projectName === span.textContent)
+      ) {
+        const projectObject = {
+          projectName: span.textContent,
+          tasks: [],
+          isOn: false,
+        };
+        taskArray.push(projectObject);
+      }
+
+      taskArray.forEach((project) => (project.isOn = false));
+      taskArray.find(
+        (project) => project.projectName === span.textContent
+      ).isOn = true;
+    });
   }
 
   function closeProjectForm() {
