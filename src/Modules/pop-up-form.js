@@ -40,6 +40,8 @@ const UI = (() => {
     overlay.addEventListener("click", closeForm);
     cancelButton.addEventListener("click", closeForm);
     submitButton.addEventListener("click", () => {
+      //finding which project the user clicked on
+      const clickedProject = taskArray.find((project) => project.isOn);
       //removing elements so they dont duplicate
       removeElementsByClass("item");
 
@@ -60,36 +62,38 @@ const UI = (() => {
       }
 
       if (lowPrio.classList.contains("active")) {
-        taskArray[0].tasks.push(
+        clickedProject.tasks.push(
           task(taskTitle.value, taskAbout.value, date.value, "low")
         );
         closeForm();
-        displayTasks(taskArray[0].tasks);
-        return storeTasks(taskArray);
+        displayTasks(clickedProject.tasks);
+        return storeTasks(clickedProject.projectName, clickedProject);
       }
 
       if (mediumPrio.classList.contains("active")) {
-        taskArray[0].tasks.push(
+        clickedProject.tasks.push(
           task(taskTitle.value, taskAbout.value, date.value, "medium")
         );
         closeForm();
-        displayTasks(taskArray[0].tasks);
-        return storeTasks(taskArray);
+        displayTasks(clickedProject.tasks);
+        return storeTasks(clickedProject.projectName, clickedProject);
       }
 
       if (highPrio.classList.contains("active")) {
-        taskArray[0].tasks.push(
+        clickedProject.tasks.push(
           task(taskTitle.value, taskAbout.value, date.value, "high")
         );
         closeForm();
-        displayTasks(taskArray[0].tasks);
-        return storeTasks(taskArray);
+        displayTasks(clickedProject.tasks);
+        return storeTasks(clickedProject.projectName, clickedProject);
       }
+      console.log(clickedProject);
     });
   }
 
   function displayTasks(array) {
     const taskItems = document.querySelector(".task-items");
+    const clickedProject = taskArray.find((project) => project.isOn);
     for (let i = 0; i < array.length; i++) {
       array[i].id = "task" + i;
       const itemDiv = document.createElement("div");
@@ -133,24 +137,32 @@ const UI = (() => {
       appendChildToParent(taskStatusDiv, datey);
       deleteButton.addEventListener("click", () => {
         itemDiv.remove();
-        taskArray[0].tasks = taskArray[0].tasks.filter((todo) =>
+        clickedProject.tasks = clickedProject.tasks.filter((todo) =>
           todo.id !== array[i].id ? true : false
         );
-        storeTasks(taskArray);
+        storeTasks(clickedProject.projectName, clickedProject);
       });
     }
   }
 
-  function storeTasks(array) {
-    localStorage.setItem("myArray", JSON.stringify(array));
-  }
+  const storeTasks = (arrayName, arrayToBeStored) =>
+    localStorage.setItem(arrayName, JSON.stringify(arrayToBeStored));
 
   function getTasks() {
-    if (!localStorage.getItem("myArray")) return;
-    myArray = localStorage.getItem("myArray");
-    myArray = JSON.parse(myArray);
-    taskArray = [...taskArray];
-    taskArray[0].tasks = [...(myArray[0].tasks || [])];
+    let projects = [],
+      keys = Object.keys(localStorage),
+      i = keys.length;
+    while (i--) {
+      createProjects(keys[i]);
+      projects.push(localStorage.getItem(keys[i]));
+    }
+    projects = JSON.parse(projects);
+    console.log(projects);
+    // if (!localStorage.getItem("myArray")) return;
+    // myArray = localStorage.getItem("myArray");
+    // myArray = JSON.parse(myArray);
+    // taskArray = [...taskArray];
+    // taskArray[0].tasks = [...(myArray[0].tasks || [])];
   }
 
   function prioButtons() {
@@ -193,6 +205,7 @@ const UI = (() => {
   }
 
   function addProjectTitle() {
+    console.log(taskArray);
     if (projectTitleInput.value == "") {
       addClass([titleError, cancelProject, addProject], "active");
       showError(titleError, "Please choose a project title");
@@ -203,31 +216,30 @@ const UI = (() => {
     createProjects();
   }
 
-  function createProjects() {
+  function createProjects(projectName) {
     const image = document.createElement("img");
     const closeImage = document.createElement("img");
     closeImage.src = "Images/close-circle-outline.svg";
     image.src = "Images/format-list-checks.svg";
     const span = document.createElement("span");
-    addTextToElement(span, projectTitleInput.value);
+    addTextToElement(span, projectTitleInput.value || projectName);
     const div = document.createElement("div");
     appendChildToParent(div, image);
     appendChildToParent(div, span);
     appendChildToParent(div, closeImage);
     addClass(div, "a-project");
     appendChildToParent(sideBar, div);
+    if (
+      !taskArray.some((project) => project.projectName === span.textContent)
+    ) {
+      const projectObject = {
+        projectName: span.textContent,
+        tasks: [],
+        isOn: false,
+      };
+      taskArray.push(projectObject);
+    }
     span.addEventListener("click", () => {
-      if (
-        !taskArray.some((project) => project.projectName === span.textContent)
-      ) {
-        const projectObject = {
-          projectName: span.textContent,
-          tasks: [],
-          isOn: false,
-        };
-        taskArray.push(projectObject);
-      }
-
       taskArray.forEach((project) => (project.isOn = false));
       taskArray.find(
         (project) => project.projectName === span.textContent
