@@ -1,8 +1,7 @@
 import { task } from "./Task";
 
 const UI = (() => {
-  let taskArray = [{ projectName: "default", tasks: [], isOn: true }];
-  let myArray = [];
+  let taskArray = [];
   // Caching The DOM
   const addTaskButton = document.getElementById("add-button");
   const cancelButton = document.querySelector(".cancel-button");
@@ -87,7 +86,6 @@ const UI = (() => {
         displayTasks(clickedProject.tasks);
         return storeTasks(clickedProject.projectName, clickedProject);
       }
-      console.log(clickedProject);
     });
   }
 
@@ -149,20 +147,16 @@ const UI = (() => {
     localStorage.setItem(arrayName, JSON.stringify(arrayToBeStored));
 
   function getTasks() {
-    let projects = [],
-      keys = Object.keys(localStorage),
-      i = keys.length;
+    let keys = Object.keys(localStorage);
+    let i = keys.length;
     while (i--) {
+      taskArray.push(JSON.parse(localStorage.getItem(keys[i])));
       createProjects(keys[i]);
-      projects.push(localStorage.getItem(keys[i]));
     }
-    projects = JSON.parse(projects);
-    console.log(projects);
-    // if (!localStorage.getItem("myArray")) return;
-    // myArray = localStorage.getItem("myArray");
-    // myArray = JSON.parse(myArray);
-    // taskArray = [...taskArray];
-    // taskArray[0].tasks = [...(myArray[0].tasks || [])];
+
+    taskArray === undefined || taskArray.length == 0
+      ? taskArray.push({ projectName: "default", tasks: [], isOn: true })
+      : null;
   }
 
   function prioButtons() {
@@ -188,7 +182,7 @@ const UI = (() => {
 
   function openForm() {
     removeClass([lowPrio, mediumPrio, highPrio, prioError], "active");
-    clearFormInputs([taskAbout, taskTitle, date], "");
+    clearFormInputs([taskAbout, taskTitle, date]);
     const form = document.querySelector("div.form");
     addClass([form, overlay], "active");
   }
@@ -205,7 +199,6 @@ const UI = (() => {
   }
 
   function addProjectTitle() {
-    console.log(taskArray);
     if (projectTitleInput.value == "") {
       addClass([titleError, cancelProject, addProject], "active");
       showError(titleError, "Please choose a project title");
@@ -218,32 +211,45 @@ const UI = (() => {
 
   function createProjects(projectName) {
     const image = document.createElement("img");
-    const closeImage = document.createElement("img");
-    closeImage.src = "Images/close-circle-outline.svg";
+    const closeButton = document.createElement("img");
+    closeButton.src = "Images/close-circle-outline.svg";
     image.src = "Images/format-list-checks.svg";
     const span = document.createElement("span");
     addTextToElement(span, projectTitleInput.value || projectName);
     const div = document.createElement("div");
     appendChildToParent(div, image);
     appendChildToParent(div, span);
-    appendChildToParent(div, closeImage);
+    appendChildToParent(div, closeButton);
     addClass(div, "a-project");
     appendChildToParent(sideBar, div);
-    if (
-      !taskArray.some((project) => project.projectName === span.textContent)
-    ) {
-      const projectObject = {
-        projectName: span.textContent,
-        tasks: [],
-        isOn: false,
-      };
-      taskArray.push(projectObject);
-    }
+    closeButton.addEventListener("click", () => {
+      if (span.textContent === "default") return;
+      localStorage.removeItem(span.textContent);
+      taskArray = taskArray.filter(
+        (project) => project.projectName === span.textContent
+      );
+      div.remove();
+    });
     span.addEventListener("click", () => {
+      if (
+        !taskArray.some((project) => project.projectName === span.textContent)
+      ) {
+        const projectObject = {
+          projectName: span.textContent,
+          tasks: [],
+          isOn: false,
+        };
+        taskArray.push(projectObject);
+      }
       taskArray.forEach((project) => (project.isOn = false));
       taskArray.find(
         (project) => project.projectName === span.textContent
       ).isOn = true;
+      const createdProject = taskArray.find(
+        (project) => project.projectName === span.textContent
+      );
+      removeElementsByClass("item");
+      displayTasks(createdProject.tasks);
     });
   }
 
@@ -254,7 +260,7 @@ const UI = (() => {
   }
 
   function openProjectForm() {
-    clearFormInputs(projectTitleInput, "");
+    clearFormInputs(projectTitleInput);
     addClass(addProjectButton, "hide");
     removeClass([projectForm, addProject, cancelProject, titleError], "hide");
   }
