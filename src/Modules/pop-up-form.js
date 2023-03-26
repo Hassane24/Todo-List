@@ -33,6 +33,7 @@ const UI = (() => {
 
   function addTask() {
     addTaskButton.addEventListener("click", openForm);
+    console.log("here");
   }
 
   function closeTaskForm() {
